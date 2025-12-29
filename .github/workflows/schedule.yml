@@ -1,0 +1,22 @@
+name: Hourly Clicker
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # Runs every hour
+  workflow_dispatch:      # Allows you to click a button to test it
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install Selenium
+        run: pip install selenium
+      - name: Run The Clicker
+        env:
+          TOOLKITY_DATA: ${{ secrets.TOOLKITY_DATA }}
+        run: python bot.py
