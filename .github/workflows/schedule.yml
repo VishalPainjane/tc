@@ -2,8 +2,8 @@ name: Hourly Clicker
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Runs every hour
-  workflow_dispatch:      # Allows you to click a button to test it
+    - cron: '0 * * * *'
+  workflow_dispatch:
 
 jobs:
   run-bot:
@@ -20,3 +20,13 @@ jobs:
         env:
           TOOLKITY_DATA: ${{ secrets.TOOLKITY_DATA }}
         run: python bot.py
+        
+      # NEW STEP: Upload the screenshot so you can see it
+      - name: Upload Debug Evidence
+        if: always() # Run this even if the script fails
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-evidence
+          path: |
+            debug_screenshot.png
+            debug_source.html
